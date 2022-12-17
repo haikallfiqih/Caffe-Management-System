@@ -4,14 +4,16 @@
   
   session_start();
   if (!isset($_SESSION['username'])){
-    if($_SESSION['role'] == 'admin'){
-     header("Location: dashboardadmin.php");
-    } elseif ($_SESSION['role'] == 'cashier'){
-     header("Location: dashboardcashier.php");
-    } else{
-     header("Location: login.php");
-    }
-  }
+   header("Location: login.php");
+ 
+   } elseif(isset($_SESSION['username'])){
+    if($_SESSION['role'] === 'admin'){
+      header("Location: dashboardadmin.php");
+     }  elseif ($_SESSION['role'] === 'cashier'){
+       header("Location: dashboardcashier.php");
+      };
+ 
+  } 
  
 
   $conn = connection();

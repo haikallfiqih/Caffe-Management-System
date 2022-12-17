@@ -2,15 +2,17 @@
  include 'components/header.php';
  
  session_start();
- if (!isset($_SESSION['username']) && $_SESSION['role'] == 'cashier'){
-   if($_SESSION['role'] == 'admin'){
-    header("Location: dashboardadmin.php");
-   } elseif ($_SESSION['role'] == 'customer'){
-    header("Location: dashboarduser.php");
-   } else{
-    header("Location: login.php");
-   }
- }
+ if (!isset($_SESSION['username'])){
+  header("Location: login.php");
+
+  } elseif(isset($_SESSION['username'])){
+   if($_SESSION['role'] === 'admin'){
+     header("Location: dashboardadmin.php");
+    }  elseif ($_SESSION['role'] === 'customer'){
+     header("Location: dashboarduser.php");
+    };
+
+ } 
 
 
 ?>
