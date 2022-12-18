@@ -19,13 +19,16 @@
   $conn = connection();
 
       $products= query("SELECT * FROM product");
-      
+      $food= query("SELECT * FROM product WHERE productType = 'food'");
+      $drink= query("SELECT * FROM product WHERE productType = 'drink'");
 
       $id =  $_SESSION['id'];
       
       $Get = "SELECT * FROM user WHERE id = '$id'";
       $res = mysqli_query($conn, $Get);
       $row= mysqli_fetch_array($res);
+
+  
   ?>
 
 
@@ -65,12 +68,63 @@
     <!-- ======= Sidebar ======= -->
     <?php 
     include ('components/sidebaruser.php');
+    if(isset($_POST["add_to_cart"]))
+{
+	if(isset($_SESSION["shopping_cart"]))
+	{
+        // Product
+		$item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
+		if(!in_array($_GET["id"], $item_array_id))
+		{
+            
+			$count = count($_SESSION["shopping_cart"]);
+			$item_array = array(
+				'item_id'			=>	$_GET["id"],
+				'item_name'			=>	$_POST["hidden_name"],
+				'item_price'		=>	$_POST["hidden_price"],
+				'item_quantity'		=>	$_POST["productQty"]
+			);
+			$_SESSION["shopping_cart"][$count] = $item_array;
+		}
+		else
+		{
+			echo '<script>alert("Item Already Added")</script>';
+		}
+	}
+	else
+	{
+		$item_array = array(
+			'item_id'			=>	$_GET["id"],
+			'item_name'			=>	$_POST["hidden_name"],
+			'item_price'		=>	$_POST["hidden_price"],
+			'item_quantity'		=>	$_POST["quantity"]
+		);
+		$_SESSION["shopping_cart"][0] = $item_array;
+	}
+}
+ 
+if(isset($_GET["action"]))
+{
+	if($_GET["action"] == "delete")
+	{
+		foreach($_SESSION["shopping_cart"] as $keys => $values)
+		{
+			if($values["item_id"] == $_GET["id"])
+			{
+				unset($_SESSION["shopping_cart"][$keys]);
+				echo '<script>alert("Item Removed")</script>';
+				echo '<script>window.location="orderuser.php"</script>';
+			}
+		}
+	}
+}
     ?>
     <!-- End Sidebar-->
  
     <main id="main" class="main">
       <div class="pagetitle">
-        <h3> Hello, <span  class="text-primary"><?php echo $row['username'] ?>!</span> Please Choice your Order! </h3>
+        <h3> Hello, <span  class="text-primary"><?php echo $row['username'] ?>!</h3>
+        </span> Please Choice your Order🍕</span>
       </div>
       <!-- End Page Title -->
 
@@ -78,49 +132,53 @@
 <h4>Food</h4> 
 <div class="col-lg-12">
 <div class="row">
+  <?php foreach( $food as $p) : ?>
+    <div class="card" style="width: 18rem;">
+    <form method="post" action="dashboarduser.php?action=add&id=<?php echo $p["productId"]; ?>">
+      <div style="width: 200px; height: 200px">
+      <img class="card-img-top img-fluid "  src="img/<?php echo $p['productImage'] ?>" alt="<?php echo $p['productName']  ?>">
+      </div>
       <div class="card-body">
-                  
-                    <div class="col-xxl-4 col-md-3">
-                    <?php foreach( $products as $p) : ?>
-                  <img src='pictureshow.php?productId=<?= $p ?>'  alt=""/>
-                     <p><?php echo $p['productName']  ?></p>
-                     <h5 class="card-title"><?php echo $p['productPrice']  ?></h5>
-                     </div>
-                     <a href="orderuser.php" class="btn btn-primary">Order</a>
-                     <?php endforeach ?>    
-                </div>
-          </div>
-          </div>  
-          </div>
-         <h4>Drink</h4>
+    
+        <p class="text-primary h5"><?php echo $p['productName']  ?></p>
+        <p class="card-text">Rp <?php echo $p['productPrice']  ?></p>
+        <input type="text" name="quantity" value="1" class="form-control" />
+ 
+						<input type="hidden" name="hidden_name" value="<?php echo $p["productName"]; ?>" />
+ 
+						<input type="hidden" name="hidden_price" value="<?php echo $p["productPrice"]; ?>" />
+ 
+						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Buy" />
+      </div>
+    </div>
+  <?php endforeach ?>
+      <h4>Drink</h4>
 
-         <div class="col-lg-12">
-            <div class="row">
-   
-       <div class="col-xxl-4 col-md-3">
-           <img src="assets/img/lemon.png" alt="" width="150px" height="150px">
-           <p>Lemon Tea</p>
-           <p>Rp. 10.000</p>
-           <p>5</p>
-       </div>
-       <div class="col-xxl-4 col-md-3">
-           <img src="assets/img/thai.png" alt="" width="150px" height="150px">
-           <p>Thai Tea Original</p>
-           <p>Rp. 25.000</p>
-           <p>4</p>
-       </div>
-       <div class="col-xxl-4 col-md-3">
-           <img src="assets/img/coffee.png" alt="" width="150px" height="150px">
-           <p>Coffee</p>
-           <p>Rp. 30.000</p>
-           <p>5</p>
-       </div>
-      <div class="col-xxl-4 col-md-1">
-           <img src="assets/img/avocado.png" alt="" width="150px" height="150px">
-           <p>Avocado Juice</p>
-           <p>Rp. 20.000</p>
-           <p>5</p>
-       </div>
+    <div class="col-lg-12">
+      <div class="row">
+        <?php foreach( $drink as $p) : ?>
+          <div class="card" style="width: 18rem;">
+            <form method="post" action="dashboarduser.php?action=add&id=<?php echo $p["productId"]; ?>">
+          <div style="width: 200px; height: 200px">
+          <img class="card-img-top img-fluid "  src="img/<?php echo $p['productImage'] ?>" alt="<?php echo $p['productName']  ?>">
+          </div>
+          <div class="card-body">
+        
+            <p class="text-primary h5"><?php echo $p['productName']  ?></p>
+            <p class="card-text">Rp <?php echo $p['productPrice']  ?></p>
+            
+            <input type="text" name="quantity" value="1" class="form-control" />
+ 
+						<input type="hidden" name="hidden_name" value="<?php echo $p["productName"]; ?>" />
+ 
+						<input type="hidden" name="hidden_price" value="<?php echo $p["productPrice"]; ?>" />
+ 
+						<input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-primary" value="Buy" />
+            </form>
+          </div>
+        </div>
+      <?php endforeach ?>
+       
     <!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

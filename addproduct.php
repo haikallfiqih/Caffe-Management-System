@@ -70,8 +70,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <input type="text" class="form-control" id="productQty" name="productQty" required>
             </div>
             <div class="mb-3">
+                <label for="productType" class="form-label">Type</label>
+                <!-- <input type="select" class="form-control" id="productType" name="productQty" required> -->
+                <select name="productType" class="form-select">
+                  <option value="food">Food</option>
+                  <option value="drink">Drink</option>
+              </select>
+            </div>
+            <div class="mb-3">
                 <label for="Image" class="form-label">Image</label>
-                <input type="file" class="form-control" id="productImage" name="productImage">
+                <input type="file" class="form-control" id="productImage" name="Image">
             </div>
 
             <button type="submit" class="btn btn-primary">Add Product</button>
@@ -83,6 +91,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <section> 
 
   </section>
+    <!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
   </body>

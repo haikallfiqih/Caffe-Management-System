@@ -76,7 +76,7 @@ if (!isset($_SESSION['username'])){
    
       <main id="main" class="main">
         <div class="pagetitle">
-          <h3>Seller</h3>
+          <h3>Sale</h3>
         </div>
         <!-- End Page Title -->
       

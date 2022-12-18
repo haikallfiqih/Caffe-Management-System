@@ -1,17 +1,24 @@
 <?php
  include 'components/header.php';
+ include 'components/function.php';
  
  session_start();
  if (!isset($_SESSION['username'])){
   header("Location: login.php");
 
   } elseif(isset($_SESSION['username'])){
-   if($_SESSION['role'] === 'admin'){
-     header("Location: dashboardadmin.php");
+   if($_SESSION['role'] === 'customer'){
+     header("Location: dashboarduser.php");
     }  elseif ($_SESSION['role'] === 'cashier'){
       header("Location: dashboardcashier.php");
     }
  } 
+
+ if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  if(addUser($_POST)) {
+    header("Location: usersetting.php");
+  }  
+}
 
 ?>
 <body>
@@ -31,19 +38,35 @@
                 <div class="card mb-3">
                   <div class="card-body">
                     <div class="pt-4 pb-2">
-                      <h5 class="card-title text-center pb-0 fs-4">Detail Product</h5>
+                      <h5 class="card-title text-center pb-0 fs-4">ADD USER</h5>
                     </div>
 
-                    <form method="post" name="detailproduct" action="editproduct.php"  class="row g-3 needs-validation" novalidate>
+                    <form method="post"  class="row g-3 needs-validation" novalidate>
                     <div class="col-lg-12">
-                      <span>  <img src= "pizza.png"></span>
-                            <p class="tag-section"><strong>Product Name : </strong><a href="">BANANA</a></p>
-                            <p>Description : Telslfdfldflsdlfldfdsflflsflsflsdlfldf</p>
-                            <h6>Price : </h6>
-                            <p>Qty: 16 <p>              
+                    <div class="mb-3">
+                
                         </div>
+                            <p class="tag-section"><strong>Name : <input type="text" class="form-control" id="productQty" name="name" required></strong></p>
+                            <p>Username : <input type="text" class="form-control" id="productQty" name="username" required></p>
+                            <h6>Password : <input type="password" class="form-control" id="productQty" name="password" required></h6>
+                            <p>Phone Number : <input type="text" class="form-control" id="phoneNum" name="phoneNum" ></p>
+                            <label for="role" class="form-label">Type</label>
+                            <select name="role" id="role" class="form-select">
+                                <option value="admin">Admin</option>
+                                <option value="cashier">Cashier</option>
+                                <option value="customer">Costumer</option>
+                            </select>           
+                        </div>   
+                       
+                        <div class="custom-file">
+                        <span>Profile :</span>
+                        <label for="userImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="userImage" name="Image">
+                        </div>
+                      </div>
+                   </div>
                       <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit">Edit</button>
+                        <button class="btn btn-primary w-100" type="submit">Add</button>
                       </div>
                     </form>
                   </div>

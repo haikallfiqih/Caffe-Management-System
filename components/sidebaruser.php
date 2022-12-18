@@ -30,6 +30,9 @@
           </li>
         <!-- End Login Page Nav -->
       </ul>
-      <span><a href="logout.php" class="text-danger">Log Out</a></span>
+      <a href="logout.php" type="button" class="btn btn-danger" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal">
+                    Log Out
+                  </a>
       
     </aside>

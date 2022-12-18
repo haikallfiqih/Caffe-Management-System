@@ -1,106 +1,59 @@
-<?php
-session_start();
-if (!isset($_SESSION['username'])){
-	header("Location: login.php");
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <title>Products</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet" />
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin - v2.4.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
-
-<header id="header" class="header fixed-top d-flex align-items-center">
+  <!-- ======= Sidebar ======= -->
+  <?php 
+    include ('components/header.php');
+    include ('components/sidebar.php');
+    $admin = query("SELECT * FROM user WHERE role = 'admin'");
+    $cashier = query("SELECT * FROM user WHERE role = 'cashier'");
+    $customer = query("SELECT * FROM user WHERE role = 'customer'");
+    
+    if (!isset($_SESSION['username'])){
+        header("Location: login.php");
+      
+        } elseif(isset($_SESSION['username'])){
+         if($_SESSION['role'] === 'customer'){
+           header("Location: dashboarduser.php");
+          }  elseif ($_SESSION['role'] === 'cashier'){
+            header("Location: dashboardcashier.php");
+          }
+       } 
+    ?>
+      <!-- End Sidebar-->
+      <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-        <a href="usersetting.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="" />
-            <span class="d-none d-lg-block">PRES U Caffe</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="" />
+        <span class="d-none d-lg-block">PRES U Caffe</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
     <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
-        <ul class="d-flex align-items-center">
-            <li class="nav-item d-block d-lg-none">
-                <a class="nav-link nav-icon search-bar-toggle" href="#">
-                    <i class="bi bi-search"></i>
-                </a>
-            </li>
-            <!--End Search Icon-->
+      <ul class="d-flex align-items-center">
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle" href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li>
+        <!--End Search Icon-->
 
-            <!-- End Profile Nav -->
-        </ul>
+        <!-- End Profile Nav -->
+      </ul>
     </nav>
     <!-- End Icons Navigation -->
-</header>
-<!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <?php 
-    include ('components/sidebar.php')
-    
-    ?>
-      <!-- End Sidebar-->
-
+  </header>
 <main id="main" class="main">
     <div class="pagetitle">
         <h3>User Setting</h3>
     </div>
-    <!-- End Page Title -->
-    <button  type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+    <!-- End Page Titsle -->
+    <a href="adduser.php"  type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
         ADD
-    </button>
-
-    <?php
-         ?>
-
-
-
-
-
-
-
-
-
-
+    </a>
 
     <!-- Recent Sales -->
     <h4>Admin</h4>
@@ -109,7 +62,7 @@ if (!isset($_SESSION['username'])){
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
-                <th scope="col">Password</th>
+                <th scope="col">Phone Number</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -120,37 +73,25 @@ if (!isset($_SESSION['username'])){
         <!-- Modal -->
 
         <tbody>
+        <?php foreach( $admin as $a) : ?>
+            <?php static $adminNum = 0; $adminNum++; ?>
             <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                <th scope="row"><a href="#"> <?php echo $adminNum ?> </a></th>
+                <td> <?php echo $a['name'] ?></td>
+                <td> <?php echo $a['nohp'] ?></td>
 
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
+                <td>
+                    <a href="edituser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    <a href="deleteuser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                </td>
             </tr>
-            <tr>
-                <th scope="row"><a href="#">#2147</a></th>
-                <td>Bridie Kessler</td>
-                <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
+    
 
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
-            </tr>
-            <tr>
-                <th scope="row"><a href="#">#2049</a></th>
-                <td>Ashleigh Langosh</td>
-                <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
-            </tr>
-
+            <?php endforeach; ?>
         </tbody>
     </table>
 
@@ -173,58 +114,65 @@ if (!isset($_SESSION['username'])){
         <!-- Modal -->
 
         <tbody>
+            <?php foreach( $cashier as $a) : ?>
+            <?php static $workerNum = 0; $workerNum++; ?>
             <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                <th scope="row"><a href="#"> <?php echo $workerNum ?> </a></th>
+                <td> <?php echo $a['name'] ?></td>
+                <td> <?php echo $a['nohp'] ?></td>
+                <td> <?php echo $a['role'] ?></td>
 
-                <td>Staf</td>
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
-
+                <td>
+                    <a href="edituser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    <a href="deleteuser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
                 </td>
             </tr>
+    
+
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <h4>Customer</h4>
+    <table class="table table-borderless datatable">
+        <thead>
             <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td><a href="#" class="text-primary">At praesentium minu</a></td>
+                <th scope="col">No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Action</th>
 
-                <td>Staf</td>
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
+            </tr>
+        </thead>
+        <!-- Button trigger modal -->
 
+
+        <!-- Modal -->
+
+        <tbody>
+            <?php foreach( $customer as $a) : ?>
+            <?php static $customerNum = 0; $customerNum++; ?>
+            <tr>
+                <th scope="row"><a href="#"> <?php echo $customerNum ?> </a></th>
+                <td> <?php echo $a['name'] ?></td>
+                <td> <?php echo $a['nohp'] ?></td>
+
+                <td>
+                    <a href="edituser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    <a href="deleteuser.php?id=<?php echo $a['id'] ?>">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
                 </td>
             </tr>
-            <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td><a href="#" class="text-primary">At praesentium minu</a></td>
+    
 
-                <td>Staf</td>
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
-
-                </td>
-            </tr>
-            <tr>
-                <th scope="row"><a href="#">#2457</a></th>
-                <td>Brandon Jacob</td>
-                <td><a href="#" class="text-primary">At praesentium minu</a></td>
-
-                <td>Staf</td>
-                <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">
-                        Edit
-                    </button><button type="button" class="btn btn-warning">Delete</button></td>
-
-                </td>
-            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
     </div>

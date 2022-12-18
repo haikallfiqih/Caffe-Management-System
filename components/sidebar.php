@@ -31,7 +31,7 @@
  
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="dashboardadmin.php">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
           </a>
@@ -55,14 +55,17 @@
           </a>
         </li>
  <li class="nav-item">
-          <a class="nav-link" href="seller.php">
+          <a class="nav-link" href="sale.php">
             <i class="bi bi-grid"></i>
-            <span>Seller</span>
+            <span>Sale</span>
           </a>
         </li>
        
-           
-            <span><a href="logout.php" class="text-danger">Log Out</a></span>
+        <a href="logout.php" type="button" class="btn btn-danger" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal">
+                    Log Out
+                  </a>
+            
             
         <!-- End Login Page Nav -->
    </ul>

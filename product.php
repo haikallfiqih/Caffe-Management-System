@@ -1,52 +1,29 @@
 <?php
-session_start();
-if (!isset($_SESSION['username'])){
-	header("Location: login.php");
-}
+ include 'components/header.php';
+ include ('components/sidebar.php');
+
+ session_start();
+ if (!isset($_SESSION['username'])){
+  header("Location: login.php");
+
+  } elseif(isset($_SESSION['username'])){
+   if($_SESSION['role'] === 'customer'){
+     header("Location: dashboarduser.php");
+    }  elseif ($_SESSION['role'] === 'cashier'){
+      header("Location: dashboardcashier.php");
+    }
+ } 
+
+ $product = query("SELECT * FROM product");
+
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <title>Products</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
-
-     <!-- Favicons -->
-     <link href="assets/img/favicon.png" rel="icon" />
-     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
- 
-     <!-- Google Fonts -->
-     <link href="https://fonts.gstatic.com" rel="preconnect" />
-     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
- 
-     <!-- Vendor CSS Files -->
-     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-     <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-     <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-     <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-     <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
- 
-     <!-- Template Main CSS File -->
-     <link href="assets/css/style.css" rel="stylesheet" />
- 
-    <!-- =======================================================
-  * Template Name: NiceAdmin - v2.4.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  </head>
-
  <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="usersetting.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" />
         <span class="d-none d-lg-block">PRES U Caffe</span>
       </a>
@@ -68,101 +45,65 @@ if (!isset($_SESSION['username'])){
     </nav>
     <!-- End Icons Navigation -->
   </header>
-  <!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <?php 
-    include ('components/sidebar.php');
-    include ('dbconnect.php');
-    // $query = mysqli_query($connection,"SELECT * FROM product ORDER BY id DESC");
-    ?>
-
-      <!-- End Sidebar-->
-      <div  >
+   
       <main id="main" class="main">
-      <span><a href="addproduct.php" class="text-danger">ADD</a></span>
-<div>
-          <h3>Product</h3>
-        </div>
+    <div class="pagetitle">
+        <h3>Product</h3>
+    </div>
+    <!-- End Page Titsle -->
+    <a href="addproduct.php"  type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+        ADD
+    </a>
                 <!-- Recent Sales -->
-               
-     
-                <table class="table table-borderless datatable">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <!-- Button trigger modal -->
-
-<!-- Modal -->
-                        <tbody>
-                          <tr>
-                            <th scope="row"><a href="#">#2457</a></th>
-                            <td>Brandon Jacob</td>
-                            <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                            <td>Food</td>
-                            <td>10</td>
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                             Edit
-                            </button><button type="button" class="btn btn-warning">Delete</button></td>
                             
-                          </td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2147</a></th>
-                            <td>Bridie Kessler</td>
-                            <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                            <td>Food</td>
-                            <td>10</td>
+    <table class="table table-borderless datatable">
+        <thead>
+            <tr>
+              <th scope="col">No</th>
+               <th scope="col">Product Name</th>             
+               <th scope="col">Description</th>             
+               <th scope="col">Type</th>
+               <th scope="col">Qty</th>    
+               <th scope="col">Price</th>            
+               <th scope="col">Action</th>                          
+            </tr>
+        </thead>
+        <!-- Button trigger modal -->
 
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Edit
-                             </button><button type="button" class="btn btn-warning">Delete</button></td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Angus Grady</td>
-                            <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                            <td>Food</td>
-                            <td>10</td>
 
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Edit
-                             </button><button type="button" class="btn btn-warning">Delete</button></td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Angus Grady</td>
-                            <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                            <td>Food</td>
-                            <td>10</td>
+        <!-- Modal -->
 
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Edit
-                             </button><button type="button" class="btn btn-warning">Delete</button></td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Raheem Lehner</td>
-                            <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                            <td>Food</td>
-                            <td>10</td>
+        <tbody>
+            <?php foreach( $product as $p) : ?>
+            <?php static $productNum = 0; $productNum++; ?>
+            <tr>
+                <th scope="row"><a href="#"> <?php echo $productNum ?> </a></th>
+                           
+                <td> <?php echo $p['productName'] ?></td>
+                <td> <?php echo $p['productDesc'] ?></td>
+                <td> <?php echo $p['productType'] ?></td>
+                <td> <?php echo $p['productQty'] ?></td>
+                <td> <?php echo $p['productPrice'] ?></td>
+                
+              
+                <td>
+                  <a href="editproduct.php?productId=<?php echo $p['productId']?>" type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal">
+                        Edit
+                  </a>
+                  <a href="deleteProduct.php?id=<?php echo $p['productId']?>" type="button" class="btn btn-danger" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal">
+                        Delete
+                  </a>
+                </td>
+    
 
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Edit
-                             </button><button type="button" class="btn btn-warning">Delete</button></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+            
+                         
+                         
                 <!-- End Recent Sales -->
   
   

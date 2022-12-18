@@ -57,18 +57,51 @@ function addProduct($data){
     $productName = $data['productName'];
     $productDesc = $data['productDesc'];
     $productPrice = $data['productPrice'];
+    $productType = $data['productType'];
     $productQty = $data['productQty'];
     // $productImage = $data['productImage'];
 
     //upload iamge, sanitation
-    $Image = upload();
-    if(!$Image){
+    $productImage = upload();
+    if(!$productImage){
         return false;
     }
 
     // query insert data
-    $query = "INSERT INTO product (productId, productName, productDesc, productPrice, productQty, productImage)
-                VALUES(null, '$productName', '$productDesc', '$productPrice', '$productQty', '$Image' )";
+    $query = "INSERT INTO product (productId, productName, productDesc, productPrice, productQty, productImage, productType)
+                VALUES(null, '$productName', '$productDesc', '$productPrice', '$productQty', '$productImage', '$productType')";
+
+    
+    // insert data to book table
+    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+
+    
+    // return result
+    return mysqli_affected_rows($conn);
+
+}
+
+function addUser($data){
+    $conn = connection();
+
+
+
+    $name = $data['name'];
+    $username = $data['username'];
+    $password = $data['password'];
+    $role = $data['role'];
+    $phoneNum = $data['phoneNum'];
+
+
+    $userImage = upload();
+    // if(!$userImage){
+    //     return false;
+    // }
+    
+
+    // query insert data
+    $query = "INSERT INTO user (id, name, username, password, role, userImage, nohp)
+                VALUES(null, '$name', '$username', '$password', '$role', '$userImage', '$phoneNum')";
 
     
     // insert data to book table
@@ -149,55 +182,114 @@ function delete($Id){
     return mysqli_affected_rows($conn);
 }
 
-
-
-function edit($data){
+function deleteUser($Id){
     $conn = connection();
 
-    // data sanitation
-    $Id = $data['Id'];
-    $Title =mysqli_real_escape_string($conn, htmlspecialchars($data['Title']));
-    $Writer =mysqli_real_escape_string($conn, htmlspecialchars($data['Writer']));
-    $Publisher =mysqli_real_escape_string($conn, htmlspecialchars($data['Publisher']));
-    $Category =mysqli_real_escape_string($conn, htmlspecialchars($data['Category']));
-    $oldImage =mysqli_real_escape_string($conn, htmlspecialchars($data['oldImage']));
+     mysqli_query($conn, "DELETE FROM user WHERE Id = $Id") or die('Query Failure'. mysqli_error($conn) );
 
-    
-    // upload image
-    $Image = upload();
+    return mysqli_affected_rows($conn);
+}
 
-    
-    // if there is no new image, use existing image (old image)
-    if($Image === 'default.jpg'){
-        $Image = $oldImage;
-    } else {
-        /*delete old image
-          check if it default image, if yes don't delete
-        */
-        if ($oldImage !== 'default.jpg'){
-            unlink('img/' . $oldImage);
-        }
-    }
+function deleteProduct($Id){
+    $conn = connection();
 
-    
-    // query update data
-    $query = "UPDATE book
-            SET 
-            Title = '$Title',
-            Writer = '$Writer',
-            Publisher = '$Publisher',
-            Category = '$Category',
-            Image = '$Image'
-                WHERE Id = $Id
-            ";
+     mysqli_query($conn, "DELETE FROM product WHERE productId = $Id") or die('Query Failure'. mysqli_error($conn) );
 
-    
-    // update data from book table
-    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+    return mysqli_affected_rows($conn);
+}
+
+function deleteDiscount($Id){
+    $conn = connection();
+
+     mysqli_query($conn, "DELETE FROM discount WHERE discountId = $Id") or die('Query Failure'. mysqli_error($conn) );
+
     return mysqli_affected_rows($conn);
 }
 
 
+
+function editProduct($data){
+    $conn = connection();
+
+    // data sanitation
+    $Id = $data['productId'];
+    $Name = $data['productName'];
+    $Desc = $data['productDesc'];
+    $Type = $data['productType'];
+    $Qty = $data['productQty'];
+    $Price = $data['productPrice'];
+   
+    
+ 
+    // query update data
+    $query = "UPDATE product
+            SET 
+            productId = '$Id' ,
+            productName = '$Name',
+          	productDesc = '$Desc',  
+            productPrice = '$Price',
+            productQty   = '$Qty',
+            productType = '$Type',
+                WHERE productId = $Id
+            ";
+
+    
+    // update data from table
+    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+    return mysqli_affected_rows($conn);
+}
+
+function editUser($data){
+    $conn = connection();
+
+    // data sanitation
+    $Id = $data['id'];
+    $name = $data['name'];
+    $username = $data['username'];
+$password = $data['password'];
+    $nohp = $data['phoneNum'];
+    $role = $data['role'];
+   
+    
+ 
+    // query update data
+    $query = "UPDATE user 
+    SET name = '$name', 
+    username = '$username', 
+    password = '$password', 
+    nohp = '$nohp',
+    role = '$role', 
+    where Id = '$Id' "
+            ;
+
+    
+    // update data from table
+    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+    return mysqli_affected_rows($conn);
+}
+
+function editDiscount($data){
+    $conn = connection();
+
+    // data sanitation
+    $Id = $data['discountId'];
+    $Name = $data['discountName'];
+    $Code = $data['discountCode'];
+    $Amount = $data['discountAmount'];
+   
+    // query update data
+    $query = "UPDATE discount
+            SET 
+            discountId = '$Id',
+            discountName = '$Name',
+            discountCode = '$Code',  
+            discountAmount = '$Amount',
+                WHERE discountId = $Id
+            ";
+            mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+            return mysqli_affected_rows($conn);
+
+}
 
 // upload function
 function upload(){
@@ -210,11 +302,11 @@ function upload(){
     // $tmpName = $_FILES['Image']['tmp_name'];
     // $ekstensiFile = pathinfo($namaFile, PATHINFO_EXTENSION);
 
-    $fileName = $_FILES['productImage']['name'];
-    $fileType = $_FILES['productImage']['type'];
-    $fileSize= $_FILES['productImage']['size'];
-    $error = $_FILES['productImage']['error'];
-    $tmpName = $_FILES['productImage']['tmp_name'];
+    $fileName = $_FILES['Image']['name'];
+    $fileType = $_FILES['Image']['type'];
+    $fileSize= $_FILES['Image']['size'];
+    $error = $_FILES['Image']['error'];
+    $tmpName = $_FILES['Image']['tmp_name'];
     $fileExtention = pathinfo($fileName, PATHINFO_EXTENSION);
 
     
@@ -246,7 +338,7 @@ function upload(){
     $newFileName .= $fileExtention;
 
     // // upload Image
-    move_uploaded_file($tmpName, 'img/');
+    move_uploaded_file($tmpName, 'img/' . $newFileName);
     return $newFileName;
 }
 
