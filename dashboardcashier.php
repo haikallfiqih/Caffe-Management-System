@@ -1,5 +1,5 @@
 <?php
- include 'components/header.php';
+ include ('components/sidebarcashier.php');
  
  session_start();
  if (!isset($_SESSION['username'])){
@@ -14,6 +14,11 @@
 
  } 
 
+ $productorder= query("SELECT * FROM productorder");
+ foreach ($productorder as $p);
+
+ $user = query('SELECT * FROM user');
+$products = query('SELECT * FROM product');
 
 ?>
 
@@ -31,8 +36,6 @@
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
-      <!-- End Search Bar -->
-
       <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
           <li class="nav-item d-block d-lg-none">
@@ -40,18 +43,14 @@
               <i class="bi bi-search"></i>
             </a>
           </li>
-          <!--End Search Icon-->
- 
-          <!-- End Profile Nav -->
         </ul>
       </nav>
-      <!-- End Icons Navigation -->
     </header>
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
     <?php 
-    include ('components/sidebarcashier.php')
+   
     
     ?>
     <!-- End Sidebar-->
@@ -79,7 +78,9 @@
 
                     <div class="d-flex align-items-start">
                       <div class="ps-3">
-                        <h1>145</h1>
+                        <h1><?php 
+                        echo count($products);
+                        ?></h1>
                       </div>
                     </div>
                   </div>
@@ -97,7 +98,9 @@
 
                     <div class="d-flex align-items-start">
                       <div class="ps-3">
-                        <h1>145</h1>
+                        <h1><?php 
+                        echo count($productorder);
+                        ?></h1>
                       </div>
                     </div>
                   </div>
@@ -113,7 +116,9 @@
 
                     <div class="d-flex align-items-center">
                       <div class="ps-3">
-                        <h1>1244</h1>
+                        <h1><?php 
+                        echo count($products);
+                        ?></h1>
                       </div>
                     </div>
                   </div>
@@ -129,65 +134,36 @@
             
               <h4>Transactions</h4>
 
-<p class="date">Kamis, 16 desember 2022</p>
+              <table class="table table-borderless datatable">
+                        <thead>
+                          <tr>
+                          <th width="10%">No</th>
+                          <th width="20%">Item Name</th>
+                          <th width="20%">Item List</th>
+						              <th width="10%">Quantity</th>
+						              <th width="20%">Total Price</th>
+						              <th width="20%">Action</th>
+                          </tr>
+                        </thead>
 
-<div class="col-lg-12">
-<div class="row">
-
-<div class="col-xxl-4 col-md-1">
-   <p>Picture</p>
-   <p>Picture2</p>
-
- </div>
-
- <div class="col-xxl-4 col-md-2">
-   <p>Halal Pork Pizza</p>
-   <p>Red Baby Cake</p>
- </div>
-
- <div class="col-xxl-4 col-md-3">
-   <p>Success</p>
- </div>
-
- <div class="col-xxl-4 col-md-3">
-   <p>Receipt.jpg</p>
-   <p>Receipt.jpg</p>
- </div>
-
- <div class="col-xxl-4 col-md-2">
-   <p>+Rp.120.000</p>
-   <p>+Rp.130.000</p>
- </div>
- 
-<p class="date">Kamis, 15 desember 2022</p>
-
-<div class="col-lg-12">
-<div class="row">
-
-<div class="col-xxl-4 col-md-1">
-   <p>Picture</p>
-   <p>Picture2</p>
- </div>
-
- <div class="col-xxl-4 col-md-2">
-   <p>Black Burger</p>
-   <p>Cilok Goreng</p>
- </div>
-
- <div class="col-xxl-4 col-md-3">
-   <p>Success</p>
-   <p>Success</p>
- </div>
-
- <div class="col-xxl-4 col-md-3">
-   <p>Receipt.jpg</p>
-   <p>Receipt.jpg</p>
- </div>
-
- <div class="col-xxl-4 col-md-2">
-   <p>+Rp.110.000</p>
-   <p>+Rp.120.000</p>
- </div>
+                        <tbody>
+                          <tr>
+                            <td><?php static $orderNum = 1; echo $orderNum++; ?></td>
+                            <td><?php echo $p['userName'] ?></td>
+                            <td><?php echo $p['orderList'] ?></td>
+                            <td><?php echo $p['orderQty'] ?></td>
+                            <td><?php echo $p['price'] ?></td>
+                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                Accept
+                               </button>
+                               <button type="bustton" class="btn btn-danger">Deny</button>
+                               <a href="detailorder.php" type="button" class="btn btn-warning">View</a>
+                              </td>
+                          </tr>
+                          
+                          </tr>
+                        </tbody>
+                      </table>
  
 
 <!-- End Footer -->

@@ -1,18 +1,27 @@
 <?php 
+include 'components/header.php';
+include 'components/sidebarcashier.php'; 
 
-  include 'components/function.php';
- 
-  $conn = connection();
-  session_start();
-      $products= query("SELECT * FROM product");
-      
 
-      $id =  $_SESSION['id'];
-      
-      $Get = "SELECT * FROM user WHERE id = '$id'";
-      $res = mysqli_query($conn, $Get);
-      $row= mysqli_fetch_array($res);
+if (!isset($_SESSION['username'])){
+ header("Location: login.php");
+
+ } elseif(isset($_SESSION['username'])){
+  if($_SESSION['role'] === 'admin'){
+    header("Location: dashboardadmin.php");
+   }  elseif ($_SESSION['role'] === 'customer'){
+    header("Location: dashboarduser.php");
+   };
+
+} 
+
+
+
+ $products= query("SELECT * FROM productorder");
+ foreach ($products as $p);
   ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   
@@ -46,7 +55,7 @@
   </header>
 <body>
 
-<?php include 'components/sidebarcashier.php'; ?>
+
 <main id="main" class="main">
         <div class="pagetitle">
           <h3>Order</h3>
@@ -59,90 +68,30 @@
                       <table class="table table-borderless datatable">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Delivery Mode</th>
-                            <th scope="col">Purchase</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Action</th>
+                          <th width="10%">No</th>
+                          <th width="20%">Item Name</th>
+                          <th width="20%">Item List</th>
+						              <th width="10%">Quantity</th>
+						              <th width="20%">Total Price</th>
+						              <th width="20%">Action</th>
                           </tr>
                         </thead>
-                        <!-- Button trigger modal -->
-
-
-<!-- Modal -->
 
                         <tbody>
                           <tr>
-                            <th scope="row"><a href="#">#2457</a></th>
-                            <td>Brandon Jacob</td>
-                            <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                            <td>Home Delivery</td>
-                            <td>screenshot.pdf</td>
-                            <td>10</td>
+                            <td><?php static $orderNum = 1; echo $orderNum++; ?></td>
+                            <td><?php echo $p['userName'] ?></td>
+                            <td><?php echo $p['orderList'] ?></td>
+                            <td><?php echo $p['orderQty'] ?></td>
+                            <td><?php echo $p['price'] ?></td>
                             <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                                 Accept
                                </button>
-                               <button type="button" class="btn btn-danger">Deny</button>
-                               <button type="button" class="btn btn-warning">View</button>
+                               <button type="bustton" class="btn btn-danger">Deny</button>
+                               <a href="detailorder.php" type="button" class="btn btn-warning">View</a>
                               </td>
                           </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2147</a></th>
-                            <td>Bridie Kessler</td>
-                            <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                            <td>Home Delivery</td>
-                            <td>screenshot.pdf</td>
-                            <td>10</td>
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Accept
-                             </button><button type="button" class="btn btn-danger">Deny</button>
-                             <button type="button" class="btn btn-warning">View</button></td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Angus Grady</td>
-                            <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                            <td>Home Delivery</td>
-                            <td>screenshot.pdf</td>
-                            <td>10</td>
-
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                               Accept
-                               </button>
-                               <button type="button" class="btn btn-danger">Deny</button>
-                               <button type="button" class="btn btn-warning">View</button>
-                              </td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Angus Grady</td>
-                            <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                            <td>Home Delivery</td>
-                            <td>screenshot.pdf</td>
-                            <td>10</td>
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                              Accept
-                             </button>
-                             <button type="button" class="btn btn-danger">Deny</button>
-                             <button type="button" class="btn btn-warning">View</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row"><a href="#">#2644</a></th>
-                            <td>Raheem Lehner</td>
-                            <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                            <td>Home Delivery</td>
-                            <td>screenshot.pdf</td>
-                            <td>10</td>
-
-                            <td><button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                                Accept
-                               </button>
-                               <button type="button" class="btn btn-danger">Deny</button>
-                               <button type="button" class="btn btn-warning">View</button>
-                              </td>
+                          
                           </tr>
                         </tbody>
                       </table>
@@ -150,8 +99,6 @@
                         <ul  class="pagination">
                           <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                           <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">Next</a></li>
                         </ul>
                       </nav>

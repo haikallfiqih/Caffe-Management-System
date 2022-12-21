@@ -20,6 +20,34 @@
             header("Location: dashboardcashier.php");
           }
        } 
+    
+       $user = query("SELECT * FROM user");
+
+       if(isset($_GET['page']))
+            {
+                $page = $_GET['page'];
+            }
+            else
+            {
+                $page = 1;
+            }
+            $num_per_page = 04;
+            $start_from = ($page-1)*04;
+         
+            
+            $user= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
+            // foreach ($products as $product);
+            $admin= query("SELECT * FROM user WHERE role = 'admin' LIMIT $start_from,$num_per_page");
+            $cashier= query("SELECT * FROM user WHERE role = 'cashier' LIMIT $start_from,$num_per_page");
+            $customer= query("SELECT * FROM user WHERE role = 'customer' LIMIT $start_from,$num_per_page");
+            $q= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
+           
+        
+        $pr_query = "select * from user ";
+        $pr_result = mysqli_query($conn,$pr_query);
+        $total_record = mysqli_num_rows($pr_result );
+        
+        $total_page = ceil($total_record/$num_per_page);
     ?>
       <!-- End Sidebar-->
       <header id="header" class="header fixed-top d-flex align-items-center">
@@ -179,7 +207,24 @@
     </div>
     </div>
     <!-- End Recent Sales -->
-
+    <ul align="center" class="pagination">
+      <?php 
+        if($page>1)
+        {
+            echo "<a href='usersetting.php?page=".($page-1)."' class='page-link'>Previous</a>";
+        }
+        for($i=1;$i<$total_page;$i++)
+        {
+            echo "<a href='usersetting.php?page=".$i."' class='page-link'>$i</a>";
+        }
+    
+        if($i>$page)
+        {
+            echo "<a href='usersetting.php?page=".($page+1)."' class='page-link'>Next</a>";
+        }
+      
+      ?>
+      </ul>    
 
 
 

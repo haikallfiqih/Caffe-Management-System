@@ -2,7 +2,7 @@
 
 // connect to db
 function connection(){
-$conn = mysqli_connect('localhost', 'root', '', 'ssip') or die('Connection to database failure!');
+$conn = mysqli_connect('localhost', 'root', '', 'ssip2') or die('Connection to database failure!');
 return $conn;
 }
 
@@ -18,7 +18,29 @@ function query($query){
     return $rows;
 }
 
+// function to accept data from $_SESSION["shopping_cart"])
+function addOrder($data){
+    $conn = connection();
+    
+   if(isset($data['userName']) && isset($data['orderQty']) && isset($data['price'])){
+    $name = $data['userName'];
+    $orderQty = $data['orderQty'];
+    $date = date('Y-m-d H:i:s');
+    $price = $data['price'];
 
+    // query insert data
+    $query = "INSERT INTO productorder (orderId, userName, orderQty, date, price)
+                VALUES(null, '$name', '$orderQty', '$date', '$price')";
+
+    
+    // insert data to order table
+    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
+
+
+    // return result
+    return mysqli_affected_rows($conn);
+   }
+} //end of add data func
 
 function register($data){
     $conn = connection();

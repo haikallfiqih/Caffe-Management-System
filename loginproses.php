@@ -20,6 +20,7 @@ if($_GET['mod']=='login'){
 	//check data
 	if(mysqli_num_rows($Q)){
 	$_SESSION['username']=$r['username'];
+	$_SESSION['name']=$r['name'];
 		$_SESSION['pass']=$r['password'];
 		$_SESSION['id']=$r['id'];
 		$_SESSION['role']=$r['role'];

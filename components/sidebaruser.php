@@ -1,3 +1,16 @@
+<?php 
+  include 'components/header.php';
+  include 'components/function.php';
+  $conn = connection();
+  session_start();
+  
+    $id =  $_SESSION['id'];
+      
+      $qGet = "SELECT * FROM user WHERE id = '$id'";
+      $result = mysqli_query($conn, $qGet);
+      $row= mysqli_fetch_array($result);
+  ?>
+
 <aside id="sidebar" class="sidebar">
       
       <div class="row">
@@ -13,7 +26,7 @@
         <li class="nav-item">
             <a class="nav-link" href="dashboarduser.php">
               <i class="bi bi-grid"></i>
-              <span>Dashboard</span>
+              <span>Menu</span>
             </a>
           </li>
           <li class="nav-item">

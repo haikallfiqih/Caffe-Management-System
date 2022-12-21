@@ -1,16 +1,15 @@
-<?php 
-  include 'components/header.php';
-  include 'components/function.php';
-  $conn = connection();
-  session_start();
-      $products= query("SELECT * FROM product");
-      
+<?php
+ include ('components/header.php');
+ include ('components/sidebarcashier.php');
+ 
+ session_start();
+ 
+//  $id = $_GET['id'];
+//  $conn = connection();
 
-      $id =  $_SESSION['id'];
-      
-      $Get = "SELECT * FROM user WHERE id = '$id'";
-      $res = mysqli_query($conn, $Get);
-      $row= mysqli_fetch_array($res);
+  $qGet = "SELECT * FROM user WHERE id = '$id'";
+  $result = mysqli_query($conn, $qGet);
+  $u=mysqli_fetch_array($result);
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +42,7 @@
 
     <!-- ======= Sidebar ======= -->
     <?php 
-    include ('components/sidebarcashier.php');
-    include ('dbconnect.php');
+
     // $query = mysqli_query($connection,"SELECT * FROM discount ORDER BY id DESC");
     ?>
    
@@ -56,55 +54,37 @@
         <!-- End Page Title -->
 
                 <!-- Recent Sales -->
-                <form>
+                <form action="updateaccount.php">
                     <div >
+                    <input type="hidden" value="<?php echo $u['id'] ?>" name="id"></input>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                        <input type="name" class="form-control" id="inputEmail3">
+                        <input type="text" class="form-control" value="<?php echo $u['username'] ?>" id="productQty" name="username" required>
                         </div>
                       </div>
                     <div >
                       <label for="inputEmail3" class="col-sm-2 col-form-label">Phone Number</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="08xxxxxxxxxx">
+                      <input type="text" class="form-control" value="<?php echo $u['nohp'] ?>" id="phoneNum" placeholder="08xxxxxxxxxx" name="phoneNum" >  
+                      
                       </div>
                     </div>
-                    <div>
-                      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                      <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                      </div>
-                    </div>
-                    
-                    <fieldset class="form-group">
-                      <div class="row">
-                        <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
-                        <div class="col-sm-10">
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                            <label class="form-check-label" for="gridRadios1">
-                              Male
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                            <label class="form-check-label" for="gridRadios2">
-                             Female
-                            </label>
-                          </div>
-                      </div>
-                    </div>
-                    <div>
+                    <div >
                         <label for="inputPassword3" class="col-sm-2 col-form-label">Change Password</label>
                         <div class="col-sm-10">
-                          <input type="password" class="form-control" id="inputPassword4" placeholder="Change Password">
+                        <input type="password" class="form-control" value="<?php echo $u['password'] ?>" id="productQty" name="password" required>
                         </div>
                       </div>
+            
                     <div class="form-group row">
-                      <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                      </div>
-                    </div>
+                      <div class="col-sm-10"> <br>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                      </div> 
+                    </div> 
+                  
+                    <tr>
+              
+            </tr>
                   </form>
                   
                      
@@ -125,3 +105,4 @@
   </html>
   
  
+

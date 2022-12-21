@@ -39,16 +39,16 @@ if (!isset($_SESSION['username'])){
     
 
         <div class="mb-3">
-        <input type="hidden" class="form-control" value="<?php echo $u['discountId'] ?>" id="discountName" name="discountId" >
-            <label for="Writer" class="form-label">Discount Name </label>
+        <input type="hidden" class="form-control" value="<?php echo $u['discountId'] ?>" id="discountId" name="discountId" >
+            <label for="Name" class="form-label">Discount Name </label>
             <input type="text" class="form-control" value="<?php echo $u['discountName'] ?>" id="discountName" name="discountName" >
         </div>
         <div class="mb-3">
-            <label for="Publisher" class="form-label">Discount Code</label>
+            <label for="Code" class="form-label">Discount Code</label>
             <input type="text" value="<?php echo $u['discountCode'] ?>" class="form-control" id="discountCode" name="discountCode" >
         </div>
         <div class="mb-3">
-            <label for="Publisher" class="form-label">Discount Amount (%)</label>
+            <label for="Amount" class="form-label">Discount Amount (%)</label>
             <input type="text" value="<?php echo $u['discountAmount'] ?>"" class="form-control" id="discountAmount" name="discountAmount" >
         </div>
 

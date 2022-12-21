@@ -1,55 +1,20 @@
 <?php 
-  include 'components/header.php';
-  include 'components/function.php';
-  $conn = connection();
-  session_start();
+  include ('components/header.php');
+  include ('components/sidebaruser.php');
+
       $products= query("SELECT * FROM product");
-      
+     
+      $conn = connection();
 
       $id =  $_SESSION['id'];
       
-      $Get = "SELECT * FROM user WHERE id = '$id'";
-      $res = mysqli_query($conn, $Get);
-      $row= mysqli_fetch_array($res);
+      $Get = isset($_GET['discountCode']) ? $_GET['discountCode'] : '';
+      $getDiscount = query("SELECT * FROM discount WHERE discountCode = '$Get'");
+      
   ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-    <title>Dashboard - NiceAdmin Bootstrap Template</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon" />
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet" />
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin - v2.4.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  </head>
-
+ 
   <body>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -80,7 +45,7 @@
 
     <!-- ======= Sidebar ======= -->
    <?php
-   include ('components/sidebaruser.php');
+
    ?>
     <!-- End Sidebar-->
  
@@ -88,54 +53,6 @@
       <div class="pagetitle">
         <h3>My Order</h3>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-        
-        <form action="" method="POST" enctype="multipart/form-data">
-            <form>
-                <div >
-                    <label for="Point">My Point <input type="text" class="form-control" id="Point"></label>
-                    <div class="col-sm-10">
-                    
-                    </div>
-                  </div>
-                <div >
-                  <label for="Voucher" class="col-form-label">My Voucher</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="Voucher">
-                  </div>
-                </div>
-                <div>
-                  <label for="Method" class="col-form-label">Payment Method</label>
-                  <div class="col-sm-10">
-                  <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-  <label class="form-check-label" for="inlineRadio1">OVO</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-  <label class="form-check-label" for="inlineRadio2">ShopeePay</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-  <label class="form-check-label" for="inlineRadio2">Cash</label>
-</div>
-
-                
-                  </div>
-                </div>
-                <div>
-                    <label for="Total" class="col-form-label">Total</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="Total">
-                    </div>
-                  </div>
-              </form>
-            <button type="submit" class="btn btn-primary">Order</button>
-
-        </form>
-
-
         <div style="clear:both"></div>
 			<br />
 			<h3>Order Details</h3>
@@ -158,9 +75,9 @@
 					<tr>
 						<td><?php echo $values["item_name"]; ?></td>
 						<td><?php echo $values["item_quantity"]; ?></td>
-						<td>Rp <?php echo $values["item_price"]; ?></td>
-						<td>Rp <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
-						<td><a href="test.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
+						<td>Rp. <?php echo $values["item_price"]; ?></td>
+						<td>Rp. <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
+						<td><a href="dashboarduser.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
 					</tr>
 					<?php
 							$total = $total + ($values["item_quantity"] * $values["item_price"]);
@@ -168,14 +85,108 @@
 					?>
 					<tr>
 						<td colspan="3" align="right">Total</td>
-						<td align="right">Rp <?php echo number_format($total, 2); ?></td>
+						<td align="right">Rp. <?php echo number_format($total, 2); ?></td>
 						<td></td>
 					</tr>
 					<?php
 					}
-					?>
-						
-				</table>
+					?>	
+          
+          </table>
+      </div>
+                <div >
+            <form method="post" action="">
+                   
+                 <label for="Voucher" class="col-form-label">Discount Code</label>
+                  <div class="col-sm-10 d-flex">
+                    <input type="text" name="voucher" class="form-control mx-2" id="Voucher">
+                    <input type="submit" class="btn btn-success"></input>
+                  </div>     
+                 </form>             
+                </div>
+                <div>
+                  <label for="Method" class="col-form-label">Payment Method</label>
+                  <div class="col-sm-10">
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                      <label class="form-check-label" for="inlineRadio1">OVO</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                      <label class="form-check-label" for="inlineRadio2">ShopeePay</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+                      <label class="form-check-label" for="inlineRadio2">Cash</label>
+                 </div>
+                
+                  </div>
+                </div> 
+                <div>
+                <?php
+              if(isset($_POST['voucher'])){
+                $voucher = $_POST['voucher'];
+                $query = mysqli_query($conn, "SELECT * FROM discount WHERE discountCode = '$voucher'");
+                if(mysqli_num_rows($query) == 0){
+                  echo "<script>alert('Voucher not found!')</script>";
+                  echo "<script>window.location.href='orderuser.php'</script>";
+                }
+                $getDiscount = mysqli_fetch_assoc($query);
+                $total = $total - $total / 100 * $getDiscount['discountAmount'];
+              
+              ?>
+                  <div class="form-group
+                  row">
+                    <div class="col-sm-10">
+                      <label for="Total" class="col-form-label">Total</label>
+                     
+                      <p>Discount Code: <?php echo $voucher ?> </p>
+                      <p>Discount Amount: <?php echo $getDiscount['discountAmount'] ?>%</p>
+                      <p class='h4'>Total: Rp. <?php echo number_format($total, 2); ?> </p>
+                      <p></p>
+                    </div>
+                  </div>
+
+               <?php } ?>   
+
+              
+               
+              </input>
+              </form>
+
+              <form method="post" action="orderlist.php">
+              <input type="hidden" name="price" value="<?php echo $total; ?>"></input>
+              <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>"></input>
+              <?php
+              $totalQuantity = 0;
+              foreach($_SESSION["shopping_cart"] as $keys => $values)
+              {
+                $totalQuantity += $values["item_quantity"];
+              }
+              ?>
+              <input type="hidden" name="quantity" value="<?php echo $totalQuantity; ?>"></input>
+              <?php
+              $itemName = "";
+              foreach($_SESSION["shopping_cart"] as $keys => $values)
+              {
+                $itemName .= $values["item_name"] . ", ";
+              }
+              ?>
+              <input type="hidden" name="item" value="<?php echo $itemName; ?>"></input>
+              <input type="submit" name="submit" class="btn btn-primary" value="Order"></input>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+              
 			</div>
 		</div>
 

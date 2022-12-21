@@ -1,8 +1,6 @@
 <?php
- include 'components/header.php';
  include ('components/sidebar.php');
 
- session_start();
  if (!isset($_SESSION['username'])){
   header("Location: login.php");
 
@@ -16,8 +14,31 @@
 
  $discount = query("SELECT * FROM discount");
 
-?>
+ if(isset($_GET['page']))
+      {
+          $page = $_GET['page'];
+      }
+      else
+      {
+          $page = 1;
+      }
+      $num_per_page = 02;
+      $start_from = ($page-1)*02;
+   
+      
+      $discount= query("SELECT * FROM discount LIMIT $start_from,$num_per_page");
+      // foreach ($products as $product);
 
+      $q= query("SELECT * FROM discount LIMIT $start_from,$num_per_page");
+     
+  
+  $pr_query = "select * from discount ";
+  $pr_result = mysqli_query($conn,$pr_query);
+  $total_record = mysqli_num_rows($pr_result );
+  
+  $total_page = ceil($total_record/$num_per_page);
+          
+  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -83,28 +104,39 @@
                           
                             <td><a href="editdiscount.php?discountId=<?php echo $a['discountId'] ?>" type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                              Edit
-                            </a><a href="deleteDiscount.php" type="button" class="btn btn-warning">Delete</a></td>
-                            
+                            <a href="deleteDiscount.php?discountId=<?php echo $a['discountId']?>" type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                        Delete
+                  </a>
                           </td>
                           </tr>
                           <?php endforeach; ?>
                             
                         </tbody>
                       </table>
-                      <nav  aria-label="Page navigation example">
-                        <ul align="center" class="pagination">
-                          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                      </nav>
+                     
                     </div>
                   </div>
                 </div>
                 <!-- End Recent Sales -->
                 
+      <ul align="center" class="pagination">
+      <?php 
+        if($page>1)
+        {
+            echo "<a href='discount.php?page=".($page-1)."' class='page-link'>Previous</a>";
+        }
+        for($i=1;$i<$total_page;$i++)
+        {
+            echo "<a href='discount.php?page=".$i."' class='page-link'>$i</a>";
+        }
+    
+        if($i>$page)
+        {
+            echo "<a href='discount.php?page=".($page+1)."' class='page-link'>Next</a>";
+        }
+      
+      ?>
+      </ul>          
   
   
  
