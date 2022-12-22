@@ -2,12 +2,9 @@
 
 include 'components/function.php';
 $conn = connection();
-// include 'components/function.php';
-
 
 if(isset($_POST['id']) || isset($_POST['name']) || isset($_POST['username']) || isset($_POST['phoneNum']) || isset($_POST['password']) || isset($_POST['role'])){
     $id = $_POST['id'];
-
     $name = $_POST['name'];
     $username = $_POST['username'];
     $phoneNum = $_POST['phoneNum'];
@@ -29,7 +26,6 @@ if(isset($_POST['id']) || isset($_POST['name']) || isset($_POST['username']) || 
         document.location.href = 'accountuser.php';
         </script>";
     }
-
 }
 ?>
 

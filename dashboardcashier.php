@@ -11,7 +11,6 @@
     }  elseif ($_SESSION['role'] === 'customer'){
      header("Location: dashboarduser.php");
     };
-
  } 
 
  $productorder= query("SELECT * FROM productorder");
@@ -19,13 +18,10 @@
 
  $user = query('SELECT * FROM user');
 $products = query('SELECT * FROM product');
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
- 
   <body>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -49,33 +45,20 @@ $products = query('SELECT * FROM product');
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
-    <?php 
-   
-    
-    ?>
-    <!-- End Sidebar-->
- 
+
     <main id="main" class="main">
       <div class="pagetitle">
         <h2 class="text-primary">Dashboard</h2>
       </div>
-      <!-- End Page Title -->
-
-    
 
       <section class="section dashboard">
         <div class="row">
-          <!-- Left side columns -->
           <div class="col-lg-12">
             <div class="row">
-              <!-- Sales Card -->
               <div class="col-xxl-4 col-md-4">
                 <div class="card-pu info-card sales-card">
-                  
-
                   <div class="card-body">
                     <h5 class="card-title">Your Product</h5>
-
                     <div class="d-flex align-items-start">
                       <div class="ps-3">
                         <h1><?php 
@@ -91,11 +74,8 @@ $products = query('SELECT * FROM product');
               <!-- Sales Card -->
               <div class="col-xxl-4 col-md-4">
                 <div class="card-pu info-card sales-card">
-                 
-
                   <div class="card-body">
                     <h5 class="card-title">Sales Made</h5>
-
                     <div class="d-flex align-items-start">
                       <div class="ps-3">
                         <h1><?php 
@@ -127,13 +107,9 @@ $products = query('SELECT * FROM product');
               <!-- End Customers Card -->
 
 
-      <!-- End Left side columns -->
-        
-
               <!-- Recent Sales -->
             
               <h4>Transactions</h4>
-
               <table class="table table-borderless datatable">
                         <thead>
                           <tr>
@@ -147,6 +123,7 @@ $products = query('SELECT * FROM product');
                         </thead>
 
                         <tbody>
+                        <?php foreach( $productorder as $p) : ?>
                           <tr>
                             <td><?php static $orderNum = 1; echo $orderNum++; ?></td>
                             <td><?php echo $p['userName'] ?></td>
@@ -161,11 +138,9 @@ $products = query('SELECT * FROM product');
                               </td>
                           </tr>
                           
-                          </tr>
+                          <?php endforeach ?>
                         </tbody>
                       </table>
- 
-
 <!-- End Footer -->
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

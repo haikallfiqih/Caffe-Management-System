@@ -149,8 +149,6 @@
 
                <?php } ?>   
 
-              
-               
               </input>
               </form>
 
@@ -159,7 +157,8 @@
               <input type="hidden" name="name" value="<?php echo $_SESSION['name']; ?>"></input>
               <?php
               $totalQuantity = 0;
-              foreach($_SESSION["shopping_cart"] as $keys => $values)
+              if(isset($_SESSION["shopping_cart"])) {
+                foreach($_SESSION["shopping_cart"] as $keys => $values)
               {
                 $totalQuantity += $values["item_quantity"];
               }
@@ -170,6 +169,7 @@
               foreach($_SESSION["shopping_cart"] as $keys => $values)
               {
                 $itemName .= $values["item_name"] . ", ";
+              }
               }
               ?>
               <input type="hidden" name="item" value="<?php echo $itemName; ?>"></input>
@@ -183,13 +183,8 @@
     </div>
   </div>
 </div>
-
-
-
-              
 			</div>
 		</div>
-
 
     <!-- ======= Footer ======= -->
     

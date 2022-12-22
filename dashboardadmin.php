@@ -1,7 +1,6 @@
 <?php
  include ('components/sidebar.php');
 
-
  if (!isset($_SESSION['username'])){
   header("Location: login.php");
 
@@ -15,14 +14,11 @@
   header("Location: login.php");
  }
 
-
 $user = query('SELECT * FROM user');
 $products = query('SELECT * FROM product');
 $productorder= query("SELECT * FROM productorder");
 foreach ($productorder as $p);
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,8 +48,6 @@ foreach ($productorder as $p);
       </div>
       <!-- End Page Title -->
 
-    
-
       <section class="section dashboard">
         <div class="row">
           <!-- Left side columns -->
@@ -61,12 +55,9 @@ foreach ($productorder as $p);
             <div class="row">
               <!-- Sales Card -->
               <div class="col-xxl-4 col-md-4">
-                <div class="card-pu info-card sales-card">
-                  
-
+                <div class="card-pu info-card sales-card"> 
                   <div class="card-body">
                     <h5 class="card-title">Your Product</h5>
-
                     <div class="d-flex align-items-start">
                       <div class="ps-3">
                         <h1><?php 
@@ -115,16 +106,9 @@ foreach ($productorder as $p);
                   </div>
                 </div>
               </div>
-              <!-- End Customers Card -->
-
-
-      <!-- End Left side columns -->
         
-
               <!-- Recent Sales -->
-            
               <h4>Transactions</h4>
-
               <table class="table table-borderless datatable">
                         <thead>
                           <tr>
@@ -136,8 +120,8 @@ foreach ($productorder as $p);
 						              <th width="20%">Action</th>
                           </tr>
                         </thead>
-
                         <tbody>
+                        <?php foreach( $productorder as $p) : ?>
                           <tr>
                             <td><?php static $orderNum = 1; echo $orderNum++; ?></td>
                             <td><?php echo $p['userName'] ?></td>
@@ -151,11 +135,9 @@ foreach ($productorder as $p);
                                <a href="detailorder.php" type="button" class="btn btn-warning">View</a>
                               </td>
                           </tr>
-                          
-                          </tr>
+                        <?php endforeach ?>
                         </tbody>
                       </table>
- 
 
 <!-- End Footer -->
 

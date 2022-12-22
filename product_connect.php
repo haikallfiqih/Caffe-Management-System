@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
     $insert = mysqli_query($conn, $sql);
 }
 ?>
+
 <?php if (isset($_POST['submit'])) ?>
 <table border="1">
     <tbody>
@@ -32,7 +33,6 @@ if (isset($_POST['submit'])) {
     $sql = mysqli_query($conn, "SELECT * from product");
     $no = 1;
     foreach ($sql as $row) {
-
         echo
             "<tr>
             <td>" . $row['productId'] . "</td>
@@ -43,16 +43,10 @@ if (isset($_POST['submit'])) {
             <td>" . $row['productImage'] . "</td>
             <td> <a href=product_delete.php?productId=" . $row['productId'] . "> Delete </a> &nbsp;
              <a href=product_update.php?productId=" . $row['productId'] . "> Update </a> </td>
-
-
             </tr>
            ";
-
         $no++;
     }
-
         ?>
-
     </tbody>
-
 </table>

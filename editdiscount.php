@@ -37,7 +37,6 @@ if (!isset($_SESSION['username'])){
     
     <form action="updatediscount.php" method="POST" enctype="multipart/form-data">
     
-
         <div class="mb-3">
         <input type="hidden" class="form-control" value="<?php echo $u['discountId'] ?>" id="discountId" name="discountId" >
             <label for="Name" class="form-label">Discount Name </label>

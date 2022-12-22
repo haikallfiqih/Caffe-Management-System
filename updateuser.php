@@ -2,7 +2,6 @@
 
 include 'components/function.php';
 $conn = connection();
-// include 'components/function.php';
 
 
 if(isset($_POST['id']) || isset($_POST['name']) || isset($_POST['username']) || isset($_POST['phoneNum']) || isset($_POST['password']) || isset($_POST['role'])){

@@ -3,20 +3,15 @@
   include ('components/sidebaruser.php');
 
       $products= query("SELECT * FROM product");
-     
       $conn = connection();
-
       $id =  $_SESSION['id'];
-      
       $Get = isset($_GET['discountCode']) ? $_GET['discountCode'] : '';
       $getDiscount = query("SELECT * FROM discount WHERE discountCode = '$Get'");
-
-
-      
   ?>
+
 <!DOCTYPE html>
 <html lang="en">
- 
+
   <body>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -161,8 +156,6 @@
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup">
    Order
 </button>
-
-              
 			</div>
 		</div>
 
@@ -173,7 +166,7 @@
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/chart.js/chart.min.js"></script>
     <script src="assets/vendor/echarts/echarts.min.js"></script>

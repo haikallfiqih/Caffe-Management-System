@@ -18,7 +18,6 @@
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
  <header id="header" class="header fixed-top d-flex align-items-center">
@@ -29,7 +28,6 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
-    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -38,23 +36,19 @@
             <i class="bi bi-search"></i>
           </a>
         </li>
-        <!--End Search Icon-->
-
-        <!-- End Profile Nav -->
       </ul>
     </nav>
-    <!-- End Icons Navigation -->
   </header>
    
       <main id="main" class="main">
     <div class="pagetitle">
         <h3>Product</h3>
     </div>
-    <!-- End Page Titsle -->
+
     <a href="addproduct.php"  type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
         ADD
     </a>
-                <!-- Recent Sales -->
+
                             
     <table class="table table-borderless datatable">
         <thead>
@@ -68,24 +62,18 @@
                <th scope="col">Action</th>                          
             </tr>
         </thead>
-        <!-- Button trigger modal -->
-
-
-        <!-- Modal -->
 
         <tbody>
             <?php foreach( $product as $p) : ?>
             <?php static $productNum = 0; $productNum++; ?>
             <tr>
                 <th scope="row"><a href="#"> <?php echo $productNum ?> </a></th>
-                           
                 <td> <?php echo $p['productName'] ?></td>
                 <td> <?php echo $p['productDesc'] ?></td>
                 <td> <?php echo $p['productType'] ?></td>
                 <td> <?php echo $p['productQty'] ?></td>
                 <td> <?php echo $p['productPrice'] ?></td>
-                
-              
+
                 <td>
                   <a href="editproduct.php?productId=<?php echo $p['productId']?>" type="button" class="btn btn-primary" data-mdb-toggle="modal"
                         data-mdb-target="#exampleModal">
@@ -101,14 +89,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-            
-                         
-                         
+                      
                 <!-- End Recent Sales -->
-  
-  
- 
-  
+
       <!-- Template Main JS File -->
       <script src="assets/js/main.js"></script>
       <script src="assets/js/mdb.min.js.map"></script>

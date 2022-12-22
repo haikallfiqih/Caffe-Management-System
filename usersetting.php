@@ -1,8 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
-  <!-- ======= Sidebar ======= -->
   <?php 
     include ('components/header.php');
     include ('components/sidebar.php');
@@ -12,45 +10,40 @@
     
     if (!isset($_SESSION['username'])){
         header("Location: login.php");
-      
         } elseif(isset($_SESSION['username'])){
          if($_SESSION['role'] === 'customer'){
            header("Location: dashboarduser.php");
           }  elseif ($_SESSION['role'] === 'cashier'){
             header("Location: dashboardcashier.php");
           }
-       } 
-    
+       }
        $user = query("SELECT * FROM user");
 
-       if(isset($_GET['page']))
-            {
-                $page = $_GET['page'];
-            }
-            else
-            {
-                $page = 1;
-            }
-            $num_per_page = 04;
-            $start_from = ($page-1)*04;
+    if(isset($_GET['page']))
+        {
+            $page = $_GET['page'];
+        }
+        else
+        {
+            $page = 1;
+        }
+        $num_per_page = 04;
+        $start_from = ($page-1)*04;
          
             
-            $user= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
-            // foreach ($products as $product);
-            $admin= query("SELECT * FROM user WHERE role = 'admin' LIMIT $start_from,$num_per_page");
-            $cashier= query("SELECT * FROM user WHERE role = 'cashier' LIMIT $start_from,$num_per_page");
-            $customer= query("SELECT * FROM user WHERE role = 'customer' LIMIT $start_from,$num_per_page");
-            $q= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
-           
+        $user= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
+        $admin= query("SELECT * FROM user WHERE role = 'admin' LIMIT $start_from,$num_per_page");
+        $cashier= query("SELECT * FROM user WHERE role = 'cashier' LIMIT $start_from,$num_per_page");
+        $customer= query("SELECT * FROM user WHERE role = 'customer' LIMIT $start_from,$num_per_page");
+        $q= query("SELECT * FROM user LIMIT $start_from,$num_per_page");
         
         $pr_query = "select * from user ";
         $pr_result = mysqli_query($conn,$pr_query);
         $total_record = mysqli_num_rows($pr_result );
-        
         $total_page = ceil($total_record/$num_per_page);
-    ?>
-      <!-- End Sidebar-->
-      <header id="header" class="header fixed-top d-flex align-items-center">
+?>
+    <!-- End Sidebar-->
+    <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" />
@@ -58,8 +51,8 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
-    <!-- End Search Bar -->
 
+    <!-- End Search Bar -->
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
         <li class="nav-item d-block d-lg-none">
@@ -67,17 +60,16 @@
             <i class="bi bi-search"></i>
           </a>
         </li>
-        <!--End Search Icon-->
-
-        <!-- End Profile Nav -->
       </ul>
     </nav>
+
     <!-- End Icons Navigation -->
-  </header>
-<main id="main" class="main">
+    </header>
+    <main id="main" class="main">
     <div class="pagetitle">
         <h3>User Setting</h3>
     </div>
+
     <!-- End Page Titsle -->
     <a href="adduser.php"  type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
         ADD
@@ -95,11 +87,8 @@
 
             </tr>
         </thead>
-        <!-- Button trigger modal -->
-
 
         <!-- Modal -->
-
         <tbody>
         <?php foreach( $admin as $a) : ?>
             <?php static $adminNum = 0; $adminNum++; ?>
@@ -107,7 +96,6 @@
                 <th scope="row"><a href="#"> <?php echo $adminNum ?> </a></th>
                 <td> <?php echo $a['name'] ?></td>
                 <td> <?php echo $a['nohp'] ?></td>
-
                 <td>
                     <a href="edituser.php?id=<?php echo $a['id'] ?>">
                         <button type="button" class="btn btn-primary">Edit</button>
@@ -117,12 +105,10 @@
                     </a>
                 </td>
             </tr>
-    
-
-            <?php endforeach; ?>
+            <?php endforeach; 
+        ?>
         </tbody>
     </table>
-
 
     <h4>Worker</h4>
     <table class="table table-borderless datatable">
@@ -136,11 +122,8 @@
 
             </tr>
         </thead>
-        <!-- Button trigger modal -->
-
 
         <!-- Modal -->
-
         <tbody>
             <?php foreach( $cashier as $a) : ?>
             <?php static $workerNum = 0; $workerNum++; ?>
@@ -149,7 +132,6 @@
                 <td> <?php echo $a['name'] ?></td>
                 <td> <?php echo $a['nohp'] ?></td>
                 <td> <?php echo $a['role'] ?></td>
-
                 <td>
                     <a href="edituser.php?id=<?php echo $a['id'] ?>">
                         <button type="button" class="btn btn-primary">Edit</button>
@@ -159,8 +141,6 @@
                     </a>
                 </td>
             </tr>
-    
-
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -173,14 +153,10 @@
                 <th scope="col">Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Action</th>
-
             </tr>
         </thead>
-        <!-- Button trigger modal -->
-
 
         <!-- Modal -->
-
         <tbody>
             <?php foreach( $customer as $a) : ?>
             <?php static $customerNum = 0; $customerNum++; ?>
@@ -188,7 +164,6 @@
                 <th scope="row"><a href="#"> <?php echo $customerNum ?> </a></th>
                 <td> <?php echo $a['name'] ?></td>
                 <td> <?php echo $a['nohp'] ?></td>
-
                 <td>
                     <a href="edituser.php?id=<?php echo $a['id'] ?>">
                         <button type="button" class="btn btn-primary">Edit</button>
@@ -198,14 +173,13 @@
                     </a>
                 </td>
             </tr>
-    
-
             <?php endforeach; ?>
         </tbody>
     </table>
     </div>
     </div>
     </div>
+
     <!-- End Recent Sales -->
     <ul align="center" class="pagination">
       <?php 
@@ -222,17 +196,12 @@
         {
             echo "<a href='usersetting.php?page=".($page+1)."' class='page-link'>Next</a>";
         }
-      
       ?>
       </ul>    
-
-
-
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/mdb.min.js.map"></script>
     <script src="assets/js/mdb.min"></script>
     </body>
-
 </html>

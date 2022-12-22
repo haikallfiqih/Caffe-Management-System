@@ -2,7 +2,6 @@
 include 'components/header.php';
 include 'components/sidebarcashier.php'; 
 
-
 if (!isset($_SESSION['username'])){
  header("Location: login.php");
 
@@ -15,8 +14,6 @@ if (!isset($_SESSION['username'])){
 
 } 
 
-
-
  $products= query("SELECT * FROM productorder");
  foreach ($products as $p);
   ?>
@@ -24,11 +21,8 @@ if (!isset($_SESSION['username'])){
 
 <!DOCTYPE html>
 <html lang="en">
-  
-  <!-- End Header -->
+   <?php include 'components/header.php';   ?>
 
-    <!-- ======= Sidebar ======= -->
-   <?php     include 'components/header.php';   ?>
    <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
@@ -37,7 +31,6 @@ if (!isset($_SESSION['username'])){
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
-    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -46,25 +39,15 @@ if (!isset($_SESSION['username'])){
             <i class="bi bi-search"></i>
           </a>
         </li>
-        <!--End Search Icon-->
-
-        <!-- End Profile Nav -->
       </ul>
     </nav>
-    <!-- End Icons Navigation -->
   </header>
 <body>
-
 
 <main id="main" class="main">
         <div class="pagetitle">
           <h3>Order</h3>
         </div>
-     
-        <!-- End Page Title -->
-
-                <!-- Recent Sales -->
-     
                       <table class="table table-borderless datatable">
                         <thead>
                           <tr>
@@ -78,6 +61,7 @@ if (!isset($_SESSION['username'])){
                         </thead>
 
                         <tbody>
+                        <?php foreach( $products as $p) : ?>
                           <tr>
                             <td><?php static $orderNum = 1; echo $orderNum++; ?></td>
                             <td><?php echo $p['userName'] ?></td>
@@ -92,7 +76,7 @@ if (!isset($_SESSION['username'])){
                               </td>
                           </tr>
                           
-                          </tr>
+                          <?php endforeach ?>
                         </tbody>
                       </table>
                       <nav  aria-label="Page navigation example">
@@ -105,13 +89,7 @@ if (!isset($_SESSION['username'])){
                     </div>
                   </div>
                 </div>
-                <!-- End Recent Sales -->
-                
-  
-  
- 
-  
-      <!-- Template Main JS File -->
+  </main>
       <script src="assets/js/main.js"></script>
       <script src="assets/js/mdb.min.js.map"></script>
       <script src="assets/js/mdb.min"></script>

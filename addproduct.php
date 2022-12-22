@@ -8,7 +8,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 }
 ?>
  
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -71,7 +70,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
             <div class="mb-3">
                 <label for="productType" class="form-label">Type</label>
-                <!-- <input type="select" class="form-control" id="productType" name="productQty" required> -->
                 <select name="productType" class="form-select">
                   <option value="food">Food</option>
                   <option value="drink">Drink</option>
@@ -81,16 +79,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <label for="Image" class="form-label">Image</label>
                 <input type="file" class="form-control" id="productImage" name="Image">
             </div>
-
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
         </div>
     </div>   
 </div>
-<!-- footer -->
-<section> 
 
-  </section>
     <!-- MDB -->
 <script
   type="text/javascript"

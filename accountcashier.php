@@ -3,9 +3,6 @@
  include ('components/sidebarcashier.php');
  
  session_start();
- 
-//  $id = $_GET['id'];
-//  $conn = connection();
 
   $qGet = "SELECT * FROM user WHERE id = '$id'";
   $result = mysqli_query($conn, $qGet);
@@ -22,7 +19,6 @@
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
-    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -31,29 +27,14 @@
             <i class="bi bi-search"></i>
           </a>
         </li>
-        <!--End Search Icon-->
-
-        <!-- End Profile Nav -->
       </ul>
     </nav>
-    <!-- End Icons Navigation -->
   </header>
-  <!-- End Header -->
-
-    <!-- ======= Sidebar ======= -->
-    <?php 
-
-    // $query = mysqli_query($connection,"SELECT * FROM discount ORDER BY id DESC");
-    ?>
    
 <main id="main" class="main">
         <div class="pagetitle">
           <h3>Account</h3>
         </div>
-        
-        <!-- End Page Title -->
-
-                <!-- Recent Sales -->
                 <form action="updateaccount.php">
                     <div >
                     <input type="hidden" value="<?php echo $u['id'] ?>" name="id"></input>
@@ -81,23 +62,12 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                       </div> 
                     </div> 
-                  
-                    <tr>
-              
-            </tr>
-                  </form>
-                  
-                     
+                    <tr> 
+                 </tr>
+                  </form>   
                     </div>
                   </div>
                 </div>
-                <!-- End Recent Sales -->
-                
-  
-  
- 
-  
-      <!-- Template Main JS File -->
       <script src="assets/js/main.js"></script>
       <script src="assets/js/mdb.min.js.map"></script>
       <script src="assets/js/mdb.min"></script>

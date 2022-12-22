@@ -3,7 +3,6 @@
     <link href="assets/css/style.css" rel="stylesheet" />
 </head>
 
-
 <body>
     <main>
       <div class="container">
@@ -52,7 +51,6 @@
                   </div>
                 </div>
 
-            
               </div>
             </div>
           </div>

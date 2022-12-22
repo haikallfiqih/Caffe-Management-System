@@ -6,7 +6,6 @@ $conn = mysqli_connect('localhost', 'root', '', 'ssip2') or die('Connection to d
 return $conn;
 }
 
-
 function query($query){
     $conn = connection();
     $result = mysqli_query($conn, $query) or die('Query Failure'. mysqli_error($conn) );
@@ -18,143 +17,91 @@ function query($query){
     return $rows;
 }
 
-// function to accept data from $_SESSION["shopping_cart"])
-function addOrder($data){
-    $conn = connection();
-    
-   if(isset($data['userName']) && isset($data['orderQty']) && isset($data['price'])){
-    $name = $data['userName'];
-    $orderQty = $data['orderQty'];
-    $date = date('Y-m-d H:i:s');
-    $price = $data['price'];
 
-    // query insert data
-    $query = "INSERT INTO productorder (orderId, userName, orderQty, date, price)
-                VALUES(null, '$name', '$orderQty', '$date', '$price')";
-
-    
-    // insert data to order table
-    mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
-
-
-    // return result
-    return mysqli_affected_rows($conn);
-   }
-} //end of add data func
 
 function register($data){
     $conn = connection();
-
     $name = $data['name'];
     $username = $data['username'];
     $role = 'customer';
     $password = $data['password'];
     $nohp = $data['phoneNum'];
 
-
-
     // query insert data
     $query = "INSERT INTO user (id, name, username, role, password, nohp)
                 VALUES(null, '$name', '$username', '$role', '$password',  '$nohp')";
 
-    
     // insert data to user table
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
 
-    
     // return result
     return mysqli_affected_rows($conn);
 
 } //end of add data func
 
-
 function addProduct($data){
     $conn = connection();
-    // data sanitation
-    // $Title =mysqli_real_escape_string($conn, htmlspecialchars($data['Title']));
-    // $Writer =mysqli_real_escape_string($conn, htmlspecialchars($data['Writer']));
-    // $Publisher =mysqli_real_escape_string($conn, htmlspecialchars($data['Publisher']));
-    // $Category =mysqli_real_escape_string($conn, htmlspecialchars($data['Category']));
+
 
     $productName = $data['productName'];
     $productDesc = $data['productDesc'];
     $productPrice = $data['productPrice'];
     $productType = $data['productType'];
     $productQty = $data['productQty'];
-    // $productImage = $data['productImage'];
+
 
     //upload iamge, sanitation
     $productImage = upload();
     if(!$productImage){
         return false;
     }
-
+    
     // query insert data
     $query = "INSERT INTO product (productId, productName, productDesc, productPrice, productQty, productImage, productType)
                 VALUES(null, '$productName', '$productDesc', '$productPrice', '$productQty', '$productImage', '$productType')";
-
     
     // insert data to book table
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
 
-    
     // return result
     return mysqli_affected_rows($conn);
-
 }
 
 function addUser($data){
     $conn = connection();
-
-
-
     $name = $data['name'];
     $username = $data['username'];
     $password = $data['password'];
     $role = $data['role'];
     $phoneNum = $data['phoneNum'];
-
-
     $userImage = upload();
-    // if(!$userImage){
-    //     return false;
-    // }
-    
 
     // query insert data
     $query = "INSERT INTO user (id, name, username, password, role, userImage, nohp)
                 VALUES(null, '$name', '$username', '$password', '$role', '$userImage', '$phoneNum')";
 
-    
     // insert data to book table
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
 
-    
     // return result
     return mysqli_affected_rows($conn);
-
 }
 
 function addDiscount($data){
     $conn = connection();
-
     $discountName = $data['discountName'];
     $discountCode = $data['discountCode'];
     $discountAmount = $data['discountAmount'];
-    
 
     // query insert data
     $query = "INSERT INTO discount (discountId, discountName, discountCode, discountAmount)
                 VALUES(null, '$discountName', '$discountCode', '$discountAmount')";
-
     
     // insert data to book table
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
-
     
     // return result
     return mysqli_affected_rows($conn);
-
 }
 
 // add data
@@ -175,11 +122,9 @@ function add($data){
     // query insert data
     $query = "INSERT INTO book
                 VALUES(null, '$Title', '$Writer', '$Publisher', '$Category', '$Image' )";
-
     
     // insert data to book table
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
-
     
     // return result
     return mysqli_affected_rows($conn);
@@ -188,25 +133,8 @@ function add($data){
 
 
 
-// delete function
-function delete($Id){
-    $conn = connection();
-
-    // delete image if isn't default image (default.jpg)
-    $book = query("SELECT * FROM book WHERE Id = $Id")[0];
-    if ($book['Image'] !== 'default.jpg') {
-        unlink('img/' . $book['Image'] );
-    }
-
-
-  mysqli_query($conn, "DELETE FROM book WHERE Id = $Id") or die('Query Failure'. mysqli_error($conn) );
-
-    return mysqli_affected_rows($conn);
-}
-
 function deleteUser($Id){
     $conn = connection();
-
      mysqli_query($conn, "DELETE FROM user WHERE Id = $Id") or die('Query Failure'. mysqli_error($conn) );
 
     return mysqli_affected_rows($conn);
@@ -260,6 +188,8 @@ function editProduct($data){
     mysqli_query($conn, $query) or die('Query Failure'.mysqli_error($conn));
     return mysqli_affected_rows($conn);
 }
+
+
 
 function editUser($data){
     $conn = connection();
@@ -316,13 +246,6 @@ function editDiscount($data){
 // upload function
 function upload(){
 
-    // Take Image data
-    // $namaFile = $_FILES['Image']['name'];
-    // $tipeFile = $_FILES['Image']['type'];
-    // $ukuranFile = $_FILES['Image']['size'];
-    // $error = $_FILES['Image']['error'];
-    // $tmpName = $_FILES['Image']['tmp_name'];
-    // $ekstensiFile = pathinfo($namaFile, PATHINFO_EXTENSION);
 
     $fileName = $_FILES['Image']['name'];
     $fileType = $_FILES['Image']['type'];

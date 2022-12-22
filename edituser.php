@@ -2,9 +2,9 @@
  include 'components/header.php';
  include 'components/function.php';
  
- session_start();
+session_start();
  if (!isset($_SESSION['username'])){
-  header("Location: login.php");
+header("Location: login.php");
 
   } elseif(isset($_SESSION['username'])){
    if($_SESSION['role'] === 'customer'){
@@ -14,23 +14,12 @@
     }
  } 
 
- $id = $_GET['id'];
- $conn = connection();
+  $id = $_GET['id'];
+  $conn = connection();
 
   $qGet = "SELECT * FROM user WHERE Id = '$id'";
   $result = mysqli_query($conn, $qGet);
   $u=mysqli_fetch_array($result);
-
-  
-
-//  if($_SERVER['REQUEST_METHOD'] == 'POST'){
-//   if(editUser($_POST)) {
-//     header("Location: usersetting.php");
-//   }  
-
-  
-// }
-
 ?>
 <body>
     <main>
@@ -55,7 +44,6 @@
                     <form method="post" action="updateuser.php"  class="row g-3 needs-validation" novalidate>
                     <div class="col-lg-12">
                     <div class="mb-3">
-                
                         </div>
                         <input type="hidden" value="<?php echo $u['id'] ?>" name="id"></input>
                             <p class="tag-section"><strong>Name : <input type="text" value="<?php echo $u['name'] ?>" class="form-control" id="productQty" name="name" required></strong></p>
@@ -70,7 +58,6 @@
                                 <option value="customer">Costumer</option>
                             </select>           
                         </div>   
-                       
                         <div class="custom-file">
                         <span>Profile :</span>
                         <label for="userImage" class="form-label">Image</label>
@@ -84,8 +71,6 @@
                     </form>
                   </div>
                 </div>
-
-            
               </div>
             </div>
           </div>

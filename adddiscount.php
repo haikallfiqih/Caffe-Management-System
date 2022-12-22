@@ -58,7 +58,6 @@ if (!isset($_SESSION['username'])){
         
         <form action="" method="POST" enctype="multipart/form-data">
         
-
             <div class="mb-3">
                 <label for="Writer" class="form-label">Discount Name</label>
                 <input type="text" class="form-control" id="discountName" name="discountName" required>

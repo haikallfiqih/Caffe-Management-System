@@ -31,7 +31,6 @@
   <label class="form-check-label" for="inlineRadio2">Cash</label>
 </div>
 
-                
                   </div>
                 </div>
                 <div>

@@ -4,15 +4,13 @@
   $conn = connection();
   session_start();
   
-    $id =  $_SESSION['id'];
-      
+      $id =  $_SESSION['id'];
       $qGet = "SELECT * FROM user WHERE id = '$id'";
       $result = mysqli_query($conn, $qGet);
       $row= mysqli_fetch_array($result);
-  ?>
+?>
 
-<aside id="sidebar" class="sidebar">
-      
+<aside id="sidebar" class="sidebar"> 
       <div class="row">
       <div class="col-lg-12">
           <div class="card-body text-center">
@@ -41,11 +39,9 @@
               <span>Account</span>
             </a>
           </li>
-        <!-- End Login Page Nav -->
       </ul>
       <a href="logout.php" type="button" class="btn btn-danger" data-mdb-toggle="modal"
                         data-mdb-target="#exampleModal">
                     Log Out
-                  </a>
-      
-    </aside>
+      </a>    
+  </aside>
