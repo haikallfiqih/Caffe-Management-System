@@ -5,7 +5,6 @@ if (!isset($_SESSION['username'])){
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -77,11 +76,7 @@ if (!isset($_SESSION['username'])){
       <main id="main" class="main">
         <div class="pagetitle">
           <h3>Sale</h3>
-        </div>
-        <!-- End Page Title -->
-      
-                <!-- Recent Sales -->
-     
+        </div> 
                       <table class="table table-borderless datatable">
                         <thead>
                           <tr>
@@ -92,10 +87,6 @@ if (!isset($_SESSION['username'])){
                            
                           </tr>
                         </thead>
-                        <!-- Button trigger modal -->
-
-
-<!-- Modal -->
 
                         <tbody>
                           <tr>
@@ -147,11 +138,7 @@ if (!isset($_SESSION['username'])){
                   </div>
                 </div>
                 <!-- End Recent Sales -->
-                
-  
-  
- 
-  
+
       <!-- Template Main JS File -->
       <script src="assets/js/main.js"></script>
       <script src="assets/js/mdb.min.js.map"></script>
