@@ -52,7 +52,7 @@ if (!isset($_SESSION['username'])){
                         <thead>
                           <tr>
                           <th width="10%">No</th>
-                          <th width="20%">Item Name</th>
+                          <th width="20%">User Name</th>
                           <th width="20%">Item List</th>
 						              <th width="10%">Quantity</th>
 						              <th width="20%">Total Price</th>
